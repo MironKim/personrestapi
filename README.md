@@ -1,7 +1,17 @@
 ###Инструкция:
-* Импортировать проект в IntellijIDEA
-* Выполнить сборку с помощью команды `mvn clean install` или с помощью заготовленного runConfigurations - `personrestapi [clean,install]` 
-* Запустить проект можно выполнив main метод из класса `com.example.rest.PersonrestapiApplication` или с помощью заготовленного runConfigurations - `PersonrestapiApplication` 
+####Импортировать проект в IntellijIDEA
+* На экране выбора проекта нажать `Ctrl+Shift+A`
+* Найти действие `Project from Existing Sources` 
+* Выбрать папку с проектом (в корне должен находиться `pom.xml`) 
+* Далее выбрать тип проекта `maven` 
+####Сборка
+* Выполнить сборку с помощью команды `mvn clean install`
+* Или с помощью заготовленного runConfigurations - `personrestapi [clean,install]`
+* Проверить что папка по пути `target/generated-sources/openapi/src/main/java` отмечена как `Generated sources root`.  
+  Если нет, то `правой кнопкой мыши по папке` > `Mark Directory as` > `Generated sources root`
+####Запуск
+* Запустить проект можно выполнив main метод из класса `com.example.rest.PersonrestapiApplication` 
+* Или с помощью заготовленного runConfigurations - `PersonrestapiApplication` 
 ---
 ###Для просмотра содержимого [H2 DB](http://localhost:8081/api/h2-console) `username=sa` `password=password`
 ###Для просмотра и проверки API [Swagger-UI](http://localhost:8081/api/swagger-ui.html) 

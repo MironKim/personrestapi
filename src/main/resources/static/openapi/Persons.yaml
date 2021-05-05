@@ -1,0 +1,159 @@
+openapi: 3.0.3
+info:
+  title: Persons RESTfull API
+  description: API для работы с людми
+  version: 1.0.0
+servers:
+  - url: /api
+    description: Starting path of servers url
+paths:
+  /persons:
+    post:
+      summary: Сохранение человека в БД
+      tags:
+        - Persons
+      operationId: create
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PersonCreationParametersDTO'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PersonDTO'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /persons/{personId}:
+    parameters:
+      - $ref: '#/components/parameters/personId'
+    get:
+      summary: Поиск человека по идентификатору
+      tags:
+        - Persons
+      operationId: findById
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PersonDTO'
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /persons/search:
+    post:
+      summary: Поиск людей по критериям
+      tags:
+        - Persons
+      operationId: findByCriteria
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PersonCriteriaDTO'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PersonDTO'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+
+components:
+  parameters:
+    personId:
+      name: personId
+      description: Идентификатор человека
+      in: path
+      schema:
+        type: integer
+        format: int64
+        example: 1
+      required: true
+  responses:
+    NotFound:
+      description: Not Found
+    InternalServerError:
+      description: Internal Server Error
+  schemas:
+    PersonCreationParametersDTO:
+      description: Параметры для создания человека
+      type: object
+      properties:
+        firstName:
+          description: Имя
+          type: string
+          example: Иван
+        lastName:
+          description: Фамилия
+          type: string
+          example: Иванов
+        middleName:
+          description: Отчество
+          type: string
+          example: Иванович
+        birthday:
+          description: Дата рождения
+          type: x-date
+          example: 21.11.2000
+      required:
+        - firstName
+        - lastName
+        - middleName
+        - birthday
+    PersonDTO:
+      description: Человек
+      properties:
+        id:
+          description: Идентификатор
+          type: integer
+          format: int64
+          example: 1
+        firstName:
+          description: Имя
+          type: string
+          example: Иван
+        lastName:
+          description: Фамилия
+          type: string
+          example: Иванов
+        middleName:
+          description: Отчество
+          type: string
+          example: Иванович
+        birthday:
+          description: Дата рождения
+          type: x-date
+          example: 21.11.2000
+      required:
+        - id
+        - firstName
+        - lastName
+        - middleName
+        - birthday
+    PersonCriteriaDTO:
+      description: Критерии поиска человека
+      properties:
+        birthdayStart:
+          description: Минимальная дата рождения
+          type: x-date
+          example: 21.11.2000
+        birthdayEnd:
+          description: Максимальная дата рождения
+          type: x-date
+          example: 21.11.2000
+      required:
+        - birthdayStart
+        - birthdayEnd
